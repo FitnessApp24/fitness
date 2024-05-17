@@ -9,25 +9,32 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const router = useRouter();
-  const handleForm = async (event: any) => {
+  const [isClient, setIsClient] = React.useState(false);
+
+  React.useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const { result, error } = await signIn(email, password);
-    if (typeof window !== 'undefined') {
-
-    window.sessionStorage.setItem("sessionId", JSON.stringify(result?.user?.uid))
+    if (result?.user?.uid && isClient) {
+      sessionStorage.setItem("sessionId", JSON.stringify(result.user.uid));
     }
+
     if (error) {
       return console.log(error);
     }
     console.log(result);
     return router.push("/onboard");
   };
+
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col sm:justify-center md:justify-start items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <Link
-          href="/login"
+          href="https://fitness.com/"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <svg
