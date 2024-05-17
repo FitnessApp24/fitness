@@ -6,7 +6,7 @@ interface MoreAboutYouProps {
   nextStep: () => void;
   prevStep: () => void;
   data: typeof initialValue;
-  onChange?: {
+  onChange: {
     (stepNumber: string): (name: string, value: string | number) => void;
   };
 }
@@ -66,7 +66,6 @@ const MoreAboutYou = (props: MoreAboutYouProps) => {
               viewBox="0 0 24 24"
               height="32"
               width="32"
-              {...props}
             >
               <path
                 fill="currentColor"
