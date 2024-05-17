@@ -8,7 +8,8 @@ const nextConfig = {
         STORAGE_BUCKET:process.env.STORAGE_BUCKET,
         MSG_SENDER_ID:process.env.MSG_SENDER_ID,
         APP_ID:process.env.APP_ID,
-        MEASURE_ID:process.env.MEASURE_ID
+        MEASURE_ID:process.env.MEASURE_ID,
+        NUTRITION_KEY:process.env.NUTRITION_KEY
     }
 }
 

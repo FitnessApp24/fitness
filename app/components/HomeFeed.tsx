@@ -76,7 +76,7 @@ const HomeFeed = (props: HomeProps) => {
         fetch('https://api.api-ninjas.com/v1/nutrition?query=' + query, {
             method: 'GET',
             headers: {
-                'X-Api-Key': '96Z5eNn9IU3cZOEnfKGvyw==YCOhQFA6UwNAqeSn',
+                'X-Api-Key': process.env.NUTRITION_KEY,
                 'Content-Type': 'application/json'
             }
         })
