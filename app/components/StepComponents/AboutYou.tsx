@@ -1,3 +1,4 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import { initialValue } from "../Stepper";
 import { retrieveDownloadUrl } from "@/app/firebase/db/addData";

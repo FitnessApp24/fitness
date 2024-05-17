@@ -1,3 +1,4 @@
+"use client";
 import React, { useContext, useEffect, useState } from "react";
 import { MealFields, Tabs } from "./types";
 import { ConsumedFoodsContext } from "./Context";
