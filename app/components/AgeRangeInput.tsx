@@ -3,16 +3,13 @@ import React, { ChangeEvent, useState } from "react";
 interface AgeRangeInputProps {
   min: number;
   max: number;
-  initialValue?: number;
   label?: string;
+  onChange?: (value: number | string) => void;
+  value?: string | number;
 }
 
 const AgeRangeInput = (props: AgeRangeInputProps) => {
-  const [selectedAge, setSelectedAge] = useState(props?.initialValue ?? 50);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setSelectedAge(+event.target.value);
-  };
 
   return (
     <>
@@ -24,17 +21,17 @@ const AgeRangeInput = (props: AgeRangeInputProps) => {
           {props?.label}
         </label>
         <div className="mt-2 text-gray-700 dark:text-gray-300">
-          {selectedAge}
+          {props?.value}
         </div>
       </div>
       <input
         id="age-range"
         type="range"
-        value={selectedAge}
+        value={props?.value}
         min={props?.min}
         max={props?.max}
         className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
-        onChange={handleChange}
+        onChange={(e) => props?.onChange(e)}
       />
     </>
   );

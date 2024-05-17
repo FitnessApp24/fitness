@@ -1,14 +1,43 @@
-import React from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 import AgeRangeInput from "../AgeRangeInput";
+import { initialValue } from "../Stepper";
 
 interface MoreAboutYouProps {
   nextStep: () => void;
   prevStep: () => void;
+  data: typeof initialValue;
+  onChange?: {
+    (stepNumber: string): (name: string, value: string | number) => void;
+  };
 }
 
 const MoreAboutYou = (props: MoreAboutYouProps) => {
+  const [disabled, setDisabled] = useState(true);
+  const stepTwo = props?.onChange("Two");
+
+  const ageHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    stepTwo("age", +event.target.value);
+  };
+  const heightHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    stepTwo("height", +event.target.value);
+  };
+  const weightHandler = (event: ChangeEvent<HTMLInputElement>) => {
+    stepTwo("weight", +event.target.value);
+  };
+
+  const handleGenderChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const genderValue = event.target.value;
+    stepTwo("gender", genderValue);
+  };
+
+  useEffect(() => {
+    if(props?.data?.stepTwo?.age && props?.data?.stepTwo?.gender && props?.data?.stepTwo?.height && props?.data?.stepTwo?.weight) {
+      setDisabled(false);
+    }
+  }, [props?.data?.stepTwo])
+
   return (
-    <div className="w-1/2 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 space-y-3">
+    <div className="w-full md:w-1/2 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 space-y-3">
       <h4 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {`Tell us more about you...`}
       </h4>
@@ -25,6 +54,7 @@ const MoreAboutYou = (props: MoreAboutYouProps) => {
             value="male"
             className="hidden peer"
             required
+            onChange={handleGenderChange}
           />
           <label
             htmlFor="male"
@@ -54,6 +84,7 @@ const MoreAboutYou = (props: MoreAboutYouProps) => {
             name="gender"
             value="female"
             className="hidden peer"
+            onChange={handleGenderChange}
           />
           <label
             htmlFor="female"
@@ -72,11 +103,27 @@ const MoreAboutYou = (props: MoreAboutYouProps) => {
         </li>
       </ul>
 
-
-    <AgeRangeInput min={16} max={100} initialValue={16} label={'Age'}/>
-    <AgeRangeInput min={50} max={300} initialValue={50} label={'Height (in cms)'}/>
-    <AgeRangeInput min={30} max={150} initialValue={30} label={'Weight (in Kgs)'}/>
-
+      <AgeRangeInput
+        min={16}
+        max={100}
+        value={props?.data?.stepTwo?.age}
+        label={"Age"}
+        onChange={ageHandler}
+      />
+      <AgeRangeInput
+        min={50}
+        max={300}
+        value={props?.data?.stepTwo?.height}
+        label={"Height (in cms)"}
+        onChange={heightHandler}
+      />
+      <AgeRangeInput
+        min={30}
+        max={150}
+        value={props?.data?.stepTwo?.weight}
+        label={"Weight (in Kgs)"}
+        onChange={weightHandler}
+      />
 
       <div className="w-full md:flex">
         <button
@@ -90,7 +137,8 @@ const MoreAboutYou = (props: MoreAboutYouProps) => {
         <button
           onClick={props?.nextStep}
           type="button"
-          className="md:flex-1 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+          disabled={disabled}
+          className="disabled:bg-gray-500 disabled:hover:bg-gray-500 md:flex-1 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
         >
           Next
         </button>

@@ -1,32 +1,34 @@
 "use client"
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { useRouter } from "next/navigation";
-import signIn from "../firebase/auth/login";
+import signUp from "../firebase/auth/signup";
 
-const Login = () => {
+const SignUp = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
+  const [confirmPassword, setConfirmPassword] = React.useState("");
   const router = useRouter();
   const handleForm = async (event: any) => {
     event.preventDefault();
+    if(password !== confirmPassword){
+      return console.log("Passwords do not match");
+    } else {
+      const { result, error } = await signUp(email, password);
 
-    const { result, error } = await signIn(email, password);
-    sessionStorage.setItem("sessionId", JSON.stringify(result?.user?.uid))
-
-    if (error) {
-      return console.log(error);
+      if (error) {
+        return console.log(error);
+      }
+      console.log(result);
+      return router.push("/onboard");
     }
-    console.log(result);
-    return router.push("/onboard");
   };
   return (
     <section className="bg-gray-50 dark:bg-gray-900">
-      <div className="flex flex-col sm:justify-center md:justify-start items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <Link
+      <div className="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+      <Link
           href="https://fitness.com/"
-          className="flex items-center space-x-3 rtl:space-x-reverse"
+          className="flex items-center space-x-3 rtl:space-x-reverse mb-3"
         >
           <svg
             width="84"
@@ -111,7 +113,7 @@ const Login = () => {
         <div className="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
-              Sign in to your account
+              Create an account
             </h1>
             <form className="space-y-4 md:space-y-6" onSubmit={handleForm}>
               <div>
@@ -128,8 +130,8 @@ const Login = () => {
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   placeholder="name@company.com"
                   required={true}
-                  value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  value={email}
                 />
               </div>
               <div>
@@ -146,49 +148,66 @@ const Login = () => {
                   placeholder="••••••••"
                   className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                   required={true}
-                  value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                 />
               </div>
-              <div className="flex items-center justify-between">
-                <div className="flex items-start">
-                  <div className="flex items-center h-5">
-                    <input
-                      id="remember"
-                      aria-describedby="remember"
-                      type="checkbox"
-                      className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
-                    />
-                  </div>
-                  <div className="ml-3 text-sm">
-                    <label
-                      htmlFor="remember"
-                      className="text-gray-500 dark:text-gray-300"
-                    >
-                      Remember me
-                    </label>
-                  </div>
-                </div>
-                <a
-                  href="#"
-                  className="text-sm font-medium text-blue-600 hover:underline dark:text-blue-500"
+              <div>
+                <label
+                  htmlFor="confirm-password"
+                  className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 >
-                  Forgot password?
-                </a>
+                  Confirm password
+                </label>
+                <input
+                  type="confirm-password"
+                  name="confirm-password"
+                  id="confirm-password"
+                  placeholder="••••••••"
+                  className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-blue-600 focus:border-blue-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                  required={true}
+                  value={confirmPassword}
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+              <div className="flex items-start">
+                <div className="flex items-center h-5">
+                  <input
+                    id="terms"
+                    aria-describedby="terms"
+                    type="checkbox"
+                    className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-blue-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-blue-600 dark:ring-offset-gray-800"
+                    required={true}
+                  />
+                </div>
+                <div className="ml-3 text-sm">
+                  <label
+                    htmlFor="terms"
+                    className="font-light text-gray-500 dark:text-gray-300"
+                  >
+                    I accept the{" "}
+                    <a
+                      className="font-medium text-blue-600 hover:underline dark:text-blue-500"
+                      href="#"
+                    >
+                      Terms and Conditions
+                    </a>
+                  </label>
+                </div>
               </div>
               <button
                 type="submit"
                 className="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
               >
-                Sign in
+                Create an account
               </button>
               <p className="text-sm font-light text-gray-500 dark:text-gray-400">
-                Don’t have an account yet?{" "}
+                Already have an account?{" "}
                 <a
-                  href="/signup"
+                  href="/login"
                   className="font-medium text-blue-600 hover:underline dark:text-blue-500"
                 >
-                  Sign up
+                  Login here
                 </a>
               </p>
             </form>
@@ -199,4 +218,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default SignUp;

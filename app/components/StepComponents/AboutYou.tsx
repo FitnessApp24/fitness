@@ -1,12 +1,51 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { initialValue } from "../Stepper";
+import { retrieveDownloadUrl } from "@/app/firebase/db/addData";
 
 interface AboutYouProps {
-    nextStep: () => void;
+  nextStep: () => void;
+  data: typeof initialValue;
+  onChange?: {
+    (stepNumber: string): (name: string, value: string | number) => void;
+  };
 }
 
 const AboutYou = (props: AboutYouProps) => {
+  const [name, setName] = useState(props?.data?.stepOne?.name || "");
+  const [fileUrl, setFileUrl] = useState<string>("");
+    const [disabled, setDisabled] = useState(true);
+
+  const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setName(event.target.value);
+    if (props.onChange) {
+      const stepOne = props.onChange("One");
+      stepOne("name", event.target.value);
+    }
+  };
+
+  const handleFileChange = async (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const uploadedFile = event.target.files?.[0];
+    const id = sessionStorage.getItem("sessionId") ?? "";
+    const url = await retrieveDownloadUrl("userOnboarding", id, uploadedFile);
+    setFileUrl(url?.downloadURL ?? "");
+    if (props.onChange) {
+      const stepOne = props.onChange("One");
+      stepOne("picture", url?.downloadURL);
+    }
+  };
+
+  useEffect(() => {
+    if(props?.data?.stepOne?.name && props?.data?.stepOne?.picture) {
+        setDisabled(false);
+    }
+  }, [props?.data?.stepOne])
+
+  
+
   return (
-    <div className="w-1/2 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 space-y-3">
+    <div className="w-full md:w-1/2 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 space-y-3">
       <h6 className="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
         {`Hello! What's your name ?`}
       </h6>
@@ -18,6 +57,8 @@ const AboutYou = (props: AboutYouProps) => {
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="Enter your name"
           required
+          value={name}
+          onChange={handleNameChange}
         />
       </div>
 
@@ -54,13 +95,29 @@ const AboutYou = (props: AboutYouProps) => {
               SVG, PNG, JPG or GIF
             </p>
           </div>
-          <input id="dropzone-file" type="file" className="hidden" />
+          <input
+            id="dropzone-file"
+            type="file"
+            className="hidden"
+            onChange={handleFileChange}
+          />
         </label>
       </div>
+      {fileUrl && (
+        <div>
+          <p>
+            File uploaded successfully!{" "}
+            <a href={fileUrl} className="text-blue-600">
+              Download
+            </a>
+          </p>
+        </div>
+      )}
       <button
         onClick={props?.nextStep}
         type="button"
-        className="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
+        disabled={disabled}
+        className="disabled:bg-gray-500 disabled:hover:bg-gray-500 w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
       >
         Next
       </button>
