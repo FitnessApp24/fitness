@@ -15,7 +15,7 @@ const Login = () => {
     const { result, error } = await signIn(email, password);
     if (typeof window !== 'undefined') {
 
-    sessionStorage.setItem("sessionId", JSON.stringify(result?.user?.uid))
+    window.sessionStorage.setItem("sessionId", JSON.stringify(result?.user?.uid))
     }
     if (error) {
       return console.log(error);
