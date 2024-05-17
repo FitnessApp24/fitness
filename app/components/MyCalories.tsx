@@ -11,7 +11,7 @@ const MyCalories = (props: {bmi?: {name?: string, value?: number}, maintenanceCa
             <span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5">{props?.bmi?.name}</span>
         </a>
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Your calculated BMI - {props?.bmi?.value?.toFixed(1)}</h1>
-        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">BMI is a screening tool that can help identify possible weight problems in adults. However, it's important to remember that BMI is just one factor among many when it comes to assessing health.</p>
+        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">BMI is a screening tool that can help identify possible weight problems in adults. However, it&apos;s important to remember that BMI is just one factor among many when it comes to assessing health.</p>
         <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <a href="#" className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                 Learn more
