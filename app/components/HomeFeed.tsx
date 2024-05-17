@@ -24,7 +24,7 @@ const HomeFeed = (props: HomeProps) => {
     const [loader, setLoader] = useState<boolean>(true)
     const { consumedFoods, dispatch } = useContext(ConsumedFoodsContext);
     const [bmi, setBmi] = useState({});
-    const [maintenanceCalories, setMaintenanceCalories] = useState(0);
+    const [maintenanceCalories, setMaintenanceCalories] = useState<number>(0);
     const [goal, setGoal] = useState('');
 
 
@@ -129,7 +129,7 @@ const HomeFeed = (props: HomeProps) => {
       setLoader(false);
     }, [])
 
-    const calculateCalories = async (id) => {
+    const calculateCalories = async (id: any) => {
         const data = await getData('userOnboarding', id);
         const height = data?.result?.stepTwo?.height / 100;
         const weight = data?.result?.stepTwo?.weight;
@@ -140,7 +140,7 @@ const HomeFeed = (props: HomeProps) => {
 
          const _bmi = calcBmi(weight, height);
         setBmi(_bmi);
-        const maintenanceCalories = calculateMaintenanceCalories(gender, weight, height, age, activityLevel)
+        const maintenanceCalories = calculateMaintenanceCalories(gender, weight, height, age, activityLevel) ?? 0;
         setMaintenanceCalories(maintenanceCalories);
         setGoal(goal)
     }

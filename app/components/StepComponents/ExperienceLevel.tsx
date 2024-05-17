@@ -6,9 +6,7 @@ interface ExperienceLevelProps {
   nextStep: () => void;
   prevStep: () => void;
   data: typeof initialValue;
-  onChange?: {
-    (stepNumber: string): (name: string, value: string | string[] | number) => void;
-  };
+  onChange?: any;
 }
 
 const ExperienceLevel = (props: ExperienceLevelProps) => {

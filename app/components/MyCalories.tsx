@@ -1,7 +1,8 @@
 import React from 'react'
 
-const MyCalories = (props: {bmi?: {name?: string, value?: number}, maintenanceCalories?: number, goal?: string, todayIntakeCalories?: number}) => {
-    const finalCalories = props?.goal === 'Gain Muscle' ? props?.maintenanceCalories + 500 : props?.goal === 'Lose Fat' ? props?.maintenanceCalories - 500 : props?.maintenanceCalories;
+const MyCalories = (props: {bmi?: {name?: string, value?: number}, maintenanceCalories: number, goal?: string, todayIntakeCalories: number}) => {
+    
+  const finalCalories = props?.goal === 'Gain Muscle' ? props?.maintenanceCalories ?? 0 + 500 : props?.goal === 'Lose Fat' ? props?.maintenanceCalories - 500 : props?.maintenanceCalories;
   const caloriesDiff = props?.maintenanceCalories - props?.todayIntakeCalories;
   const avg = ((props?.todayIntakeCalories / props?.maintenanceCalories) * 100)?.toFixed(0);
     return (
@@ -11,7 +12,7 @@ const MyCalories = (props: {bmi?: {name?: string, value?: number}, maintenanceCa
             <span className="text-xs bg-primary-600 rounded-full text-white px-4 py-1.5">{props?.bmi?.name}</span>
         </a>
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Your calculated BMI - {props?.bmi?.value?.toFixed(1)}</h1>
-        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">BMI is a screening tool that can help identify possible weight problems in adults. However, it's important to remember that BMI is just one factor among many when it comes to assessing health.</p>
+        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">BMI is a screening tool that can help identify possible weight problems in adults. However, it`s important to remember that BMI is just one factor among many when it comes to assessing health.</p>
         <div className="flex flex-col mb-8 lg:mb-16 space-y-4 sm:flex-row sm:justify-center sm:space-y-0 sm:space-x-4">
             <a href="#" className="inline-flex justify-center items-center py-3 px-5 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
                 Learn more
@@ -23,7 +24,7 @@ const MyCalories = (props: {bmi?: {name?: string, value?: number}, maintenanceCa
         <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Based on your preferences and information provided, your daily calorie intake to maintain your current weight should be <b>{finalCalories} kcal/day.</b> </p>
         <div className="mb-1 text-base font-medium dark:text-white pb-3">Keeping Count: Your Daily Calorie Intake Snapshot</div>
 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
-  <div className={`bg-blue-600 h-2.5 rounded-full dark:bg-blue-500`} style={{width: avg < 100 ? `${avg}%` : '100%'}}></div>
+  <div className={`bg-blue-600 h-2.5 rounded-full dark:bg-blue-500`} style={{width: +avg < 100 ? `${avg}%` : '100%'}}></div>
   <p className={`text-xl font-extrabold p-3 ${caloriesDiff < 0 ? 'text-red-800': ''}`}> {props?.todayIntakeCalories} / {props?.maintenanceCalories} kcal/d</p>
 {caloriesDiff && <><p className='p-3 text-2xl font-extrabold inline-block'>{`Oops! You've Exceeded Your Daily Calorie Intake by `}</p><span className='font-extrabold text-red-800 text-2xl'>{caloriesDiff?.toFixed(1)}</span> kcal</>}
 </div>

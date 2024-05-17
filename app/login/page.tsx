@@ -25,7 +25,7 @@ const Login = () => {
     <section className="bg-gray-50 dark:bg-gray-900">
       <div className="flex flex-col sm:justify-center md:justify-start items-center px-6 py-8 mx-auto md:h-screen lg:py-0">
         <Link
-          href="https://fitness.com/"
+          href="/login"
           className="flex items-center space-x-3 rtl:space-x-reverse"
         >
           <svg

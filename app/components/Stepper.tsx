@@ -87,7 +87,7 @@ const Stepper = () => {
   };
 
   const handleStepChange =
-    (stepNumber: string) => (name: string, value: string | number) => {
+    (stepNumber: any) => (name: string, value: string | number) => {
       setOnboardData((prevData) => ({
         ...prevData,
         [`step${stepNumber}`]: {

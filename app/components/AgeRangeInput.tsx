@@ -4,7 +4,7 @@ interface AgeRangeInputProps {
   min: number;
   max: number;
   label?: string;
-  onChange?: (value: number | string) => void;
+  onChange: (value: any) => void;
   value?: string | number;
 }
 

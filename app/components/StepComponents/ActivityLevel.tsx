@@ -5,12 +5,7 @@ interface ActivityLevelProps {
   nextStep: () => void;
   prevStep: () => void;
   data: typeof initialValue;
-  onChange?: {
-    (stepNumber: string): (
-      name: string,
-      value: string | string[] | number
-    ) => void;
-  };
+  onChange?: any;
 }
 
 const ActivityLevel = (props: ActivityLevelProps) => {
@@ -30,11 +25,11 @@ const ActivityLevel = (props: ActivityLevelProps) => {
 
   const equipmentHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.currentTarget;
-    let newEquipments = [...props?.data?.stepFive?.equipments];
+    let newEquipments: any = [...props?.data?.stepFive?.equipments];
     if (checked) {
       newEquipments.push(value);
     } else {
-      newEquipments = newEquipments.filter((equipment) => equipment !== value);
+      newEquipments = newEquipments.filter((equipment: any) => equipment !== value);
     }
     stepFive("equipments", newEquipments);
   };

@@ -6,9 +6,7 @@ interface NutritionalPreferencesProps {
   nextStep: () => void;
   prevStep: () => void;
   data: typeof initialValue;
-  onChange?: {
-    (stepNumber: string): (name: string, value: string | string[] | number) => void;
-  };
+  onChange?: any;
 }
 
 const NutritionalPreferences = (props: NutritionalPreferencesProps) => {
@@ -25,11 +23,11 @@ const NutritionalPreferences = (props: NutritionalPreferencesProps) => {
   };
   const allergiesHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.currentTarget;
-    let newAllergies = [...props?.data?.stepFour?.allergies];
+    let newAllergies: any = [...props?.data?.stepFour?.allergies];
     if (checked) {
       newAllergies.push(value);
     } else {
-      newAllergies = newAllergies.filter((allergy) => allergy !== value);
+      newAllergies = newAllergies.filter((allergy: any) => allergy !== value);
     }
     stepFour("allergies", newAllergies);
   };

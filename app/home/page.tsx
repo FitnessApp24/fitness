@@ -56,10 +56,7 @@ const Home = () => {
 
                 </div>
             </ConsumedFoodsProvider>
-
-            <div className='w-full, h-32 bg-gray-800 overflow-auto'>
-                <ChatBot />
-            </div>
+            <ChatBot />
         </>
 
     )
