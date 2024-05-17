@@ -26,7 +26,7 @@ const MyCalories = (props: {bmi?: {name?: string, value?: number}, maintenanceCa
 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
   <div className={`bg-blue-600 h-2.5 rounded-full dark:bg-blue-500`} style={{width: +avg < 100 ? `${avg}%` : '100%'}}></div>
   <p className={`text-xl font-extrabold p-3 ${caloriesDiff < 0 ? 'text-red-800': ''}`}> {props?.todayIntakeCalories} / {props?.maintenanceCalories} kcal/d</p>
-{caloriesDiff && <><p className='p-3 text-2xl font-extrabold inline-block'>{`Oops! You've Exceeded Your Daily Calorie Intake by `}</p><span className='font-extrabold text-red-800 text-2xl'>{caloriesDiff?.toFixed(1)}</span> kcal</>}
+{caloriesDiff <= 0 && <><p className='p-3 text-2xl font-extrabold inline-block'>{`Oops! You've Exceeded Your Daily Calorie Intake by `}</p><span className='font-extrabold text-red-800 text-2xl'>{caloriesDiff?.toFixed(1)}</span> kcal</>}
 </div>
 
    
