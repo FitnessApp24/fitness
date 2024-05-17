@@ -78,7 +78,7 @@ const HomeFeed = (props: HomeProps) => {
             headers: {
                 'X-Api-Key': process.env.NUTRITION_KEY,
                 'Content-Type': 'application/json'
-            }
+            } as any
         })
             .then(response => response.json())
             .then(result => {
@@ -258,7 +258,8 @@ const HomeFeed = (props: HomeProps) => {
             </section>
             <section className="">
                 <h1>Fitness News</h1>
-                <rssapp-magazine id="thC3Ls4LDXT4RkmT"></rssapp-magazine>
+                {/* @ts-ignore */}
+                <rssapp-magazine id="thC3Ls4LDXT4RkmT"/>
             </section>
 
             <section className="mt-8" id="bmi">
