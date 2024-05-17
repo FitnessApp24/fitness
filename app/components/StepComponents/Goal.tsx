@@ -5,7 +5,7 @@ interface GoalProps {
   nextStep: () => void;
   prevStep: () => void;
   data: typeof initialValue;
-  onChange?: {
+  onChange: {
     (stepNumber: string): (name: string, value: string | number) => void;
   };
 }
