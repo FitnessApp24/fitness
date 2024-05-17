@@ -259,7 +259,7 @@ const HomeFeed = (props: HomeProps) => {
                 </button>
             </section>
             
-              <section className="mt-8" id="bmi">
+              <section className="" id="bmi">
                 <MyCalories bmi={bmi} maintenanceCalories={maintenanceCalories} goal={goal} todayIntakeCalories={nutritionNumbers?.calories}/>
             </section>
             <section className="">
