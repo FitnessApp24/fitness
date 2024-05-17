@@ -56,7 +56,7 @@ const HomeFeed = (props: HomeProps) => {
                 protein,
                 ...consumedFoods
             }
-            addData("userTracker", JSON.parse(id), dbData);
+            addData("userTracker", id, dbData);
         }
     }
 
@@ -106,7 +106,7 @@ const HomeFeed = (props: HomeProps) => {
             if (id) {
                 setLoader(true);
                 initialCallHappened = true;
-                const { result, error } = await getData('userTracker', JSON.parse(id));
+                const { result, error } = await getData('userTracker', id);
                 if (error || !result) {
                     console.log(error);
                     setLoader(false);
