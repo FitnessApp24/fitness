@@ -258,15 +258,17 @@ const HomeFeed = (props: HomeProps) => {
                     Add Items
                 </button>
             </section>
+            
+              <section className="mt-8" id="bmi">
+                <MyCalories bmi={bmi} maintenanceCalories={maintenanceCalories} goal={goal} todayIntakeCalories={nutritionNumbers?.calories}/>
+            </section>
             <section className="">
                 <h1>Fitness News</h1>
                 {/* @ts-ignore */}
                 <rssapp-magazine id="thC3Ls4LDXT4RkmT"/>
             </section>
 
-            <section className="mt-8" id="bmi">
-                <MyCalories bmi={bmi} maintenanceCalories={maintenanceCalories} goal={goal} todayIntakeCalories={nutritionNumbers?.calories}/>
-            </section>
+          
         </div>
     )
 }
