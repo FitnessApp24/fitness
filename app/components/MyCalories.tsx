@@ -21,7 +21,7 @@ const MyCalories = (props: {bmi?: {name?: string, value?: number}, maintenanceCa
         </div>
 
         <h1 className="mb-4 text-4xl font-extrabold tracking-tight leading-none text-gray-900 md:text-5xl lg:text-6xl dark:text-white">Recommended Daily Calorie Intake to {props?.goal}</h1>
-        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Based on your preferences and information provided, your daily calorie intake to maintain your current weight should be <b>{finalCalories} kcal/day.</b> </p>
+        <p className="mb-8 text-lg font-normal text-gray-500 lg:text-xl sm:px-16 xl:px-48 dark:text-gray-400">Based on your preferences and information provided, your daily calorie intake to maintain your current weight should be <b>{finalCalories?.toFixed(1)} kcal/day.</b> </p>
         <div className="mb-1 text-base font-medium dark:text-white pb-3">Keeping Count: Your Daily Calorie Intake Snapshot</div>
 <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4 dark:bg-gray-700">
   <div className={`bg-blue-600 h-2.5 rounded-full dark:bg-blue-500`} style={{width: +avg < 100 ? `${avg}%` : '100%'}}></div>
