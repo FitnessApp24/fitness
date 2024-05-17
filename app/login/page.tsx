@@ -13,8 +13,10 @@ const Login = () => {
     event.preventDefault();
 
     const { result, error } = await signIn(email, password);
-    sessionStorage.setItem("sessionId", JSON.stringify(result?.user?.uid))
+    if (typeof window !== 'undefined') {
 
+    sessionStorage.setItem("sessionId", JSON.stringify(result?.user?.uid))
+    }
     if (error) {
       return console.log(error);
     }
