@@ -28,11 +28,11 @@ const AboutYou = (props: AboutYouProps) => {
   ) => {
     const uploadedFile = event.target.files?.[0];
     const id = sessionStorage.getItem("sessionId") ?? "";
-    const url = await retrieveDownloadUrl("userOnboarding", id, uploadedFile);
+    const url = await retrieveDownloadUrl("userOnboarding", id, uploadedFile as File);
     setFileUrl(url?.downloadURL ?? "");
     if (props.onChange) {
       const stepOne = props.onChange("One");
-      stepOne("picture", url?.downloadURL);
+      stepOne("picture", url?.downloadURL ?? '');
     }
   };
 
