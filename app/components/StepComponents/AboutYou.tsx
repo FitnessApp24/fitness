@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { initialValue } from "../Stepper";
 import { retrieveDownloadUrl } from "@/app/firebase/db/addData";
+import { useAuthContext } from "@/context/AuthContext";
 
 interface AboutYouProps {
   nextStep: () => void;
@@ -15,6 +16,7 @@ const AboutYou = (props: AboutYouProps) => {
   const [name, setName] = useState(props?.data?.stepOne?.name || "");
   const [fileUrl, setFileUrl] = useState<string>("");
     const [disabled, setDisabled] = useState(true);
+    const user: any = useAuthContext()
 
   const handleNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setName(event.target.value);
@@ -28,7 +30,7 @@ const AboutYou = (props: AboutYouProps) => {
     event: React.ChangeEvent<HTMLInputElement>
   ) => {
     const uploadedFile = event.target.files?.[0];
-    const id = sessionStorage.getItem("sessionId") ?? "";
+    const id = user?.user ?? "";
     const url = await retrieveDownloadUrl("userOnboarding", id, uploadedFile as File);
     setFileUrl(url?.downloadURL ?? "");
     if (props.onChange) {

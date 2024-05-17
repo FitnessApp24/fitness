@@ -9,25 +9,17 @@ const Login = () => {
   const [email, setEmail] = React.useState("");
   const [password, setPassword] = React.useState("");
   const router = useRouter();
-  const [isClient, setIsClient] = React.useState(false);
-
-  React.useEffect(() => {
-    setIsClient(true);
-  }, []);
 
   const handleForm = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const { result, error } = await signIn(email, password);
-    if (result?.user?.uid && isClient) {
-      sessionStorage.setItem("sessionId", JSON.stringify(result.user.uid));
-    }
 
     if (error) {
       return console.log(error);
     }
-    console.log(result);
-    return router.push("/onboard");
+    
+    return router.push("/home");
   };
 
   return (

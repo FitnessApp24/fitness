@@ -7,6 +7,7 @@ import getData from "@/app/firebase/db/getData";
 import { calcBmi } from "../utils/bmi";
 import MyCalories from "./MyCalories";
 import { calculateMaintenanceCalories } from "../utils/caloriesCalc";
+import { useAuthContext } from "@/context/AuthContext";
 
 type HomeProps = {
     updateToTrackingTab: (tab: Tabs) => void;
@@ -27,7 +28,7 @@ const HomeFeed = (props: HomeProps) => {
     const [bmi, setBmi] = useState({});
     const [maintenanceCalories, setMaintenanceCalories] = useState<number>(0);
     const [goal, setGoal] = useState('');
-
+    const user: any = useAuthContext();
 
     const parseResult = (data: any) => {
         let calories = 0;
@@ -46,7 +47,7 @@ const HomeFeed = (props: HomeProps) => {
             carbs: +carbs.toFixed(2),
             fats: +fats.toFixed(2)
         });
-        const id = sessionStorage.getItem("sessionId");
+        const id = user?.user
         if (id) {
             const dbData = {
                 calories,
@@ -99,7 +100,7 @@ const HomeFeed = (props: HomeProps) => {
     // },[]);
 
     useEffect(() => {
-        const id = sessionStorage.getItem("sessionId");
+        const id = user?.user;
         (async () => {
             if (initialCallHappened) return;
             if (id) {

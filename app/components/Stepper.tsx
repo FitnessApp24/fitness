@@ -11,6 +11,7 @@ import NutritionalPreferences from "./StepComponents/NutritionalPreferences";
 import ActivityLevel from "./StepComponents/ActivityLevel";
 import ExperienceLevel from "./StepComponents/ExperienceLevel";
 import addData from "../firebase/db/addData";
+import { useAuthContext } from "@/context/AuthContext";
 
 const steps = [
   { name: "About you", id: 1, iconSvg: ICONS.USER_CIRCLE },
@@ -55,6 +56,7 @@ const Stepper = () => {
   const [onboardData, setOnboardData] = useState(initialValue);
 
   const [currentStep, setCurrentStep] = useState(1);
+  const user: any = useAuthContext()
 
   const handleNext = () => {
     if (currentStep < 6) {
@@ -69,7 +71,7 @@ const Stepper = () => {
   };
 
   const handleForm = async () => {
-    const id = sessionStorage.getItem("sessionId");
+    const id = user?.user;
 
     if (id) {
       const { result, error } = await addData(

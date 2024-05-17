@@ -1,9 +1,11 @@
 "use client";
 import Link from "next/link";
 import React from "react";
+import { useAuthContext } from "../../context/AuthContext";
 
 const Header = () => {
   const [show, setShow] = React.useState(false);
+  const user: any = useAuthContext()
   const toggleHandler = () => {
     setShow(!show);
   };
@@ -162,15 +164,14 @@ const Header = () => {
               <a
                 href="/login"
                 onClick={() => {
-                  if (sessionStorage.getItem('sessionId')) {
-                    sessionStorage.removeItem('sessionId');
+                  if (!user?.user) {
                     window.location.href = '/login';
                   }
                   
                 }}
                 className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800"
               >
-                {sessionStorage.getItem('sessionId') ? 'Logout' : 'Login'}
+                {user?.user ? 'Logout' : 'Login'}
               </a>
             </li>
           </ul>
@@ -224,7 +225,7 @@ const Header = () => {
             href="/login"
             className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white"
           >
-           {sessionStorage.getItem('sessionId') ? 'Logout' : 'Login'}
+           {user?.user ? 'Logout' : 'Login'}
           </Link>
         </div>
       </div>
